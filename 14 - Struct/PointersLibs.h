@@ -1702,3 +1702,72 @@ unsigned short CountBits(byte b)
 
     return (counter);
 }
+
+void Multiply(float *ptr_number1, float *ptr_number2, double *ptr_result)
+{
+    float number1_float = *ptr_number1;
+    float number2_float = *ptr_number2;
+    float temp_number;
+    unsigned long long number1,
+                       counter_loop1;
+    unsigned int number2;
+    double type_number_for_multiply = 0.000001,
+           type_number_for_multiply_counter;
+    unsigned short counter_loop2;
+    
+    for (counter_loop1 = ZERO; counter_loop1 < THREE; counter_loop1++)
+    {
+        temp_number = number1_float;
+        for (counter_loop2 = ONE; counter_loop2 < TEN; counter_loop2++)
+        {
+            number1_float += temp_number;
+        }
+    }
+    number1 = number1_float;
+
+    for (counter_loop1 = ZERO; counter_loop1 < THREE; counter_loop1++)
+    {
+        temp_number = number2_float;
+        for (counter_loop2 = ONE; counter_loop2 < TEN; counter_loop2++)
+        {
+            number2_float += temp_number;
+        }
+    }
+    number2 = number2_float;
+
+    if (number2 < ZERO)
+    {
+        number2 = number2 - number2 - number2;
+    }
+
+    temp_number = number1;
+    for (counter_loop1 = ONE; counter_loop1 < number2; counter_loop1++) 
+    {
+        number1 += temp_number;
+    }
+
+    if (number1 < ZERO)
+    {
+        number1 = number1 - number1 - number1;
+    }
+
+
+    if ((number1_float < ZERO && number2_float > ZERO) || (number2_float < ZERO && number1_float > ZERO))
+    {
+        type_number_for_multiply = type_number_for_multiply - type_number_for_multiply - type_number_for_multiply;
+    }
+
+    *ptr_result = ZERO;
+    type_number_for_multiply_counter = type_number_for_multiply;
+    for (counter_loop1 = ONE; number1; number1 -= counter_loop1)
+    {
+        type_number_for_multiply_counter += type_number_for_multiply_counter;
+        counter_loop1 += counter_loop1;
+        if (counter_loop1 > number1)
+        {
+            counter_loop1 = ONE;
+            type_number_for_multiply_counter = type_number_for_multiply;
+        }
+        *ptr_result += type_number_for_multiply_counter;
+    }
+}
