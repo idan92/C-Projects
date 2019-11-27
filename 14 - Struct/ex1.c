@@ -88,9 +88,17 @@ unsigned short TeacherCountOfHoursInWeek(struct study_hours *ptr_mat, unsigned s
     return counter;
 }
 
-unsigned short CountStudentsInSubjectOnDay(struct study_hours *ptr_mat, unsigned short rows, unsigned short cols, unsigned short subject)
+int CountStudentsInSubjectOnDay(struct study_hours *ptr_mat, unsigned short rows, unsigned short cols, unsigned short subject)
 {
-
+    int counter = ZERO;
+    rows--;
+    while (rows--)
+    {
+        counter += ((*ptr_mat).subject == subject) ? (*ptr_mat).total_students : ZERO;
+        ptr_mat += cols;
+    }
+    
+    return (counter);
 }
 
 unsigned short CountStudentsInSubjectOnWeek(struct study_hours *ptr_mat, unsigned short rows, unsigned short cols, unsigned short subject)
