@@ -14,13 +14,13 @@ struct book
     int id;
 };
 
-void AddBook(struct book *ptr_vec, unsigned short *vec_length)
+void AddBook(struct book *ptr_vec, unsigned short vec_length)
 {
     struct book b;
     // I/O book
     // Check I/O book - if I/O is ok = do realloc : out from fun
-    ptr_vec = realloc(ptr_vec, ++(*vec_length) * sizeof(struct book));
-    *(ptr_vec + (*vec_length) - ONE) = b;
+    ptr_vec = realloc(ptr_vec, ++(vec_length) * sizeof(struct book));
+    *(ptr_vec + (vec_length) - ONE) = b;
 }
 
 struct book * SearchByName(struct book *ptr_vec, unsigned short vec_length, string *name)
