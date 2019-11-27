@@ -101,9 +101,16 @@ int CountStudentsInSubjectOnDay(struct study_hours *ptr_mat, unsigned short rows
     return (counter);
 }
 
-unsigned short CountStudentsInSubjectOnWeek(struct study_hours *ptr_mat, unsigned short rows, unsigned short cols, unsigned short subject)
+int CountStudentsInSubjectOnWeek(struct study_hours *ptr_mat, unsigned short rows, unsigned short cols, unsigned short subject)
 {
+    int total_students = ZERO;
+    unsigned short days = cols;
+    while (days--)
+    {
+        total_students += CountStudentsInSubjectOnDay(ptr_mat, rows, cols, subject);
+    }
     
+    return (total_students);
 }
 
 void main(void)
