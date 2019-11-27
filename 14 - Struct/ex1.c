@@ -101,6 +101,7 @@ int CountStudentsInSubjectOnDay(struct study_hours *ptr_mat, unsigned short rows
     return (counter);
 }
 
+// Ex3
 int CountStudentsInSubjectOnWeek(struct study_hours *ptr_mat, unsigned short rows, unsigned short cols, unsigned short subject)
 {
     int total_students = ZERO;
