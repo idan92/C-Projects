@@ -1,6 +1,9 @@
 #include "PointersLibs.h"
 #include <malloc.h>
 
+#define TWO_THOUSAND 2000
+#define NINETEEN 1900
+
 struct book
 {
     string name;
@@ -39,15 +42,23 @@ struct book * SearchByNameAndWriter(struct book *ptr_vec, unsigned short *vec_le
 
 }
 
-struct book * TwentyCentury(struct book *ptr_vec, unsigned short vec_length, struct book *ptr_book_vec)
+struct book * TwentyCentury(struct book *ptr_vec, unsigned short vec_length, struct book *ptr_new_vec)
 {
-    ptr_book_vec = malloc(sizeof(struct book));
-    unsigned int length = ZERO;
+    ptr_new_vec = malloc(sizeof(struct book));
+    unsigned int length = ONE;
     unsigned short counter;
     for (counter = ZERO; counter < vec_length; counter++)
     {
-
+        if ((*ptr_vec).year >= 1900 && (*ptr_vec).year >= 2000)
+        {
+            *(ptr_new_vec + (length++)) = *ptr_vec;
+            ptr_new_vec = realloc(ptr_new_vec, sizeof(struct book) * length);
+        }
+        ptr_vec++;
     }
+    ptr_new_vec = realloc(ptr_new_vec, sizeof(struct book) * (--length));
+
+    return (ptr_new_vec);
 }
 
 void main(void)
