@@ -1,9 +1,10 @@
 #include "PointersLibs.h"
 
 
-int MainSlantSum(int *ptr_mat, unsigned short rows, unsigned short cols)
+int SlantSum(int *ptr_mat, unsigned short rows, unsigned short cols)
 {
     int sum = ZERO;
+    cols++;
     for ( ;rows; rows--)
     {
         sum += *ptr_mat;
@@ -21,7 +22,7 @@ int SlantWithMaxSum(int *ptr_mat, unsigned short rows, unsigned short cols)
     ptr_mat++;
     for (slats = ONE; slats < cols; slats++)
     {
-        temp = MainSlantSum(ptr_mat++, rows, cols);
+        temp = SlantSum(ptr_mat++, rows, cols);
         max = (temp > max) ? temp : max;
     }
 
