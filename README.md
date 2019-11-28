@@ -1,2 +1,2 @@
 # C-Projects
-C projects in collage
+C projects in college
