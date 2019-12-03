@@ -46,7 +46,7 @@ int MaxSumInSlant(int *ptr_mat, unsigned short rows, unsigned short cols)
     for (; rows; rows--)
     {
         temp = temp_max + *ptr_temp_mat;
-        if (temp < temp_max)
+        if (temp < temp_max || temp_max > temp)
         {
             if (temp_max > max)
             {
