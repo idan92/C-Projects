@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <malloc.h>
 
 #define DAYS_IN_MONTH 30
 #define MONTHS_IN_YEAR 12
