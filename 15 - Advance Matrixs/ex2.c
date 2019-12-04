@@ -1,65 +1,25 @@
 #include "PointersLibs.h"
 
-/*int *PointerMaxSumInSlant(int *ptr_mat, unsigned short rows, unsigned short cols)
+int SumInSlantUntilNegative(int *ptr_mat, unsigned short rows, unsigned short cols)
 {
-    int *ptr_max_mat = ptr_mat; // Save the pointer of start max
-    int max = *ptr_max_mat;
+    int max = *ptr_mat;
+    int steps = cols + ONE;
 
-    unsigned short steps = cols + ONE;
-
-    int *ptr_temp_mat = ptr_mat + steps; // For checking
-    int temp_max = max,
-        temp;
-
-    rows--;
-    for (; rows; rows--)
+    while (rows-- && (*ptr_mat < ZERO))
     {
-        temp = temp_max + *ptr_temp_mat;
-        if (temp < temp_max)
-        {
-            if (temp_max > max)
-            {
-                max = temp_max;
-                ptr_max_mat = ptr_temp_mat;
-            }
-            temp_max = ZERO;
-        }
-        temp_max += *ptr_temp_mat;
-        ptr_temp_mat += steps;
+        max += *ptr_mat;
+        ptr_mat += steps;
     }
 
-    return (ptr_max_mat);
-}*/
+    return (max - *ptr_mat);
+}
 
-int MaxSumInSlant(int *ptr_mat, unsigned short rows, unsigned short cols)
+int MaxSumSlant(int *ptr_mat, unsigned short rows, unsigned short cols)
 {
-    int *ptr_max_mat = ptr_mat; // Save the pointer of start max
-    int max = *ptr_max_mat;
+    unsigned int area = rows * cols;
+    int max = *ptr_mat;
+    
 
-    unsigned short steps = cols + ONE;
-
-    int *ptr_temp_mat = ptr_mat + steps; // For checking
-    int temp_max = max,
-        temp;
-
-    rows--;
-    for (; rows; rows--)
-    {
-        temp = temp_max + *ptr_temp_mat;
-        if (temp < temp_max)
-        {
-            if (temp_max > max)
-            {
-                max = temp_max;
-                ptr_max_mat = ptr_temp_mat;
-            }
-            temp_max = ZERO;
-        }
-        temp_max += *ptr_temp_mat;
-        ptr_temp_mat += steps;
-    }
-
-    return (max);
 }
 
 void main(void)
