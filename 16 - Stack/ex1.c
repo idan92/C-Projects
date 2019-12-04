@@ -1,16 +1,17 @@
 #include "PointersLibs.h"
 
-struct stack
+/*struct stack
 {
     void ** values;
     unsigned int items;
-};
+};*/
 
-void CreateStack(struct stack * sk)
+
+void InitializeStack(struct stack * sk)
 {
     (*sk).items = ZERO;
-    (*sk).values = malloc(((*sk).items + ONE) * sizeof(*((*sk).values)));
 }
+
 
 BOOLEAN IsEmptyStack(struct stack * sk)
 {
@@ -19,8 +20,15 @@ BOOLEAN IsEmptyStack(struct stack * sk)
 
 void PushStack(struct stack * sk , void * item)
 {
-    (*sk).values = realloc((*sk).values, ((++((*sk).items) + ONE) * sizeof(item)));
-    *((*sk).values + (*sk).items) = item;
+    if (!((*sk).items))
+    {
+        (*sk).values = malloc((++((*sk).items)) * sizeof(item));
+    }
+    else
+    {
+        (*sk).values = realloc((*sk).values, ((++((*sk).items)) * sizeof(item)));
+    }
+    *((*sk).values + (*sk).items - ONE) = item;
 }
 
 void * PopStack(struct stack * sk)
@@ -28,8 +36,15 @@ void * PopStack(struct stack * sk)
     void * item = NULL;
     if (!IsEmptyStack(sk))
     {
-        item = *((*sk).values + (*sk).items);
-        (*sk).values = realloc((*sk).values, ((--((*sk).items) + ONE) * sizeof(item)));
+        item = *((*sk).values + (*sk).items - ONE);
+        if (!((*sk).items == ONE))
+        {
+            (*sk).values = realloc((*sk).values, ((--((*sk).items)) * sizeof(item)));
+        }
+        else
+        {
+            free((*sk).values);
+        }
     }
 
     return (item);
@@ -47,7 +62,7 @@ void CopyStack(struct stack * sk, struct stack * copy)
 {
     struct stack temp1_sk;
     void * item;
-    CreateStack(&temp1_sk);
+    InitializeStack(&temp1_sk);
 
     while (!IsEmptyStack(sk))
     {
@@ -64,7 +79,7 @@ void CopyStack(struct stack * sk, struct stack * copy)
 void OppositeStack(struct stack * sk)
 {
     struct stack temp_sk;
-    CreateStack(&temp_sk);
+    InitializeStack(&temp_sk);
     CopyStack(sk, &temp_sk);
     EmptyStack(sk);
     while (!IsEmptyStack(&temp_sk))
@@ -79,7 +94,7 @@ BOOLEAN IsEqualsStack(struct stack * sk1, struct stack * sk2)
     void * item_sk1;
     void * item_sk2;
     struct stack temp_sk;
-    CreateStack(&temp_sk);
+    InitializeStack(&temp_sk);
     while (!IsEmptyStack(sk1) && !IsEmptyStack(sk2) && flag)
     {
         item_sk1 = PopStack(sk1);
@@ -88,10 +103,25 @@ BOOLEAN IsEqualsStack(struct stack * sk1, struct stack * sk2)
     }
 }
 
+unsigned int ItemsStack(struct stack * sk)
+{
+    unsigned int counter = ZERO;
+    struct stack temp_sk;
+    InitializeStack(&temp_sk);
+    CopyStack(sk, &temp_sk);
+    while (!IsEmptyStack(&temp_sk))
+    {
+        PopStack(&temp_sk);
+        counter++;
+    }
+
+    return (counter);
+}
+
 void main(void)
 {
     struct stack s;
-    CreateStack(&s);
+    InitializeStack(&s);
     PushStack(&s, 4);
     PushStack(&s, 5);
     PushStack(&s, 6);

@@ -33,6 +33,11 @@ typedef unsigned char byte;
 typedef unsigned short word;
 typedef unsigned int dblword;
 
+struct stack
+{
+    void ** values;
+    unsigned int items;
+};
 
 //---------------------------------------------------------------------------------------
 //                                              ChangeYearsToMonths
