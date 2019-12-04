@@ -33,11 +33,20 @@ typedef unsigned char byte;
 typedef unsigned short word;
 typedef unsigned int dblword;
 
-struct stack
+typedef union
 {
-    void **values;
+    int int_;
+    char char_;
+    double double_;
+    string string_;
+    void * pointer;
+} Data_Type;
+
+typedef struct
+{
+    Data_Type * values;
     unsigned int items;
-};
+} stack;
 
 //---------------------------------------------------------------------------------------
 //                                              ChangeYearsToMonths
@@ -1778,36 +1787,36 @@ void Multiply(float *ptr_number1, float *ptr_number2, double *ptr_result)
     }
 }
 
-void InitializeStack(struct stack * sk)
+void InitializeStack(stack * sk)
 {
     (*sk).items = ZERO;
 }
 
-BOOLEAN IsEmptyStack(struct stack * sk)
+BOOLEAN IsEmptyStack(stack * sk)
 {
     return (!(*sk).items);
 }
 
-void PushStack(struct stack * sk , void * item)
+void PushStack(stack * sk , Data_Type item)
 {
     if (!((*sk).items))
     {
-        (*sk).values = malloc((++((*sk).items)) * sizeof(item));
+        (*sk).values = malloc((++((*sk).items)) * sizeof(Data_Type));
     }
     else
     {
-        (*sk).values = realloc((*sk).values, ((++((*sk).items)) * sizeof(item)));
+        (*sk).values = realloc((*sk).values, ((++((*sk).items)) * sizeof(Data_Type)));
     }
     *((*sk).values + (*sk).items - ONE) = item;
 }
 
-void * PopStack(struct stack * sk)
+Data_Type PopStack(stack * sk)
 {
-    void * item = NULL;
+    Data_Type item = {NULL, NULL, NULL, NULL};
     if ((*sk).items > ZERO)
     {
         item = *((*sk).values + (*sk).items - ONE);
-        (*sk).values = realloc((*sk).values, ((--((*sk).items)) * sizeof(item)));
+        (*sk).values = realloc((*sk).values, ((--((*sk).items)) * sizeof(Data_Type)));
     }
     else
     {
@@ -1817,7 +1826,7 @@ void * PopStack(struct stack * sk)
     return (item);
 }
 
-void EmptyStack(struct stack * sk)
+void EmptyStack(stack * sk)
 {
     while (!IsEmptyStack(sk))
     {
@@ -1825,10 +1834,10 @@ void EmptyStack(struct stack * sk)
     }
 }
 
-void CopyStack(struct stack * sk, struct stack * copy)
+void CopyStack(stack * sk, stack * copy)
 {
-    struct stack temp1_sk;
-    void * item;
+    stack temp1_sk;
+    Data_Type item;
     InitializeStack(&temp1_sk);
 
     while (!IsEmptyStack(sk))
@@ -1843,9 +1852,9 @@ void CopyStack(struct stack * sk, struct stack * copy)
     }
 }
 
-void OppositeStack(struct stack * sk)
+void OppositeStack(stack * sk)
 {
-    struct stack temp_sk;
+    stack temp_sk;
     InitializeStack(&temp_sk);
     CopyStack(sk, &temp_sk);
     EmptyStack(sk);
@@ -1855,12 +1864,12 @@ void OppositeStack(struct stack * sk)
     }
 }
 
-BOOLEAN IsEqualsStack(struct stack * sk1, struct stack * sk2)
+BOOLEAN IsEqualsStack(stack * sk1, stack * sk2)
 {
     BOOLEAN flag = TRUE;
-    void * item_sk1;
-    void * item_sk2;
-    struct stack temp_sk;
+    Data_Type item_sk1;
+    Data_Type item_sk2;
+    stack temp_sk;
     InitializeStack(&temp_sk);
     while (!IsEmptyStack(sk1) && !IsEmptyStack(sk2) && flag)
     {
@@ -1870,10 +1879,10 @@ BOOLEAN IsEqualsStack(struct stack * sk1, struct stack * sk2)
     }
 }
 
-unsigned int ItemsStack(struct stack * sk)
+unsigned int ItemsStack(stack * sk)
 {
     unsigned int counter = ZERO;
-    struct stack temp_sk;
+    stack temp_sk;
     InitializeStack(&temp_sk);
     CopyStack(sk, &temp_sk);
     while (!IsEmptyStack(&temp_sk))
@@ -1885,34 +1894,32 @@ unsigned int ItemsStack(struct stack * sk)
     return (counter);
 }
 
-int SumStack(struct stack * sk)
+int SumStack(stack * sk)
 {
     int sum = ZERO;
-    int * item;
-    struct stack temp_sk;
+    Data_Type item;
+    stack temp_sk;
     InitializeStack(&temp_sk);
     CopyStack(sk, &temp_sk);
     while (!IsEmptyStack(&temp_sk))
     {
-        item = PopStack(&temp_sk);
-        sum += *item;
+        sum += (PopStack(&temp_sk)).int_;
     }
 
     return (sum);
 }
 
-BOOLEAN FindInStack(struct stack * sk, void * item)
+BOOLEAN FindNumberInStack(stack * sk, Data_Type item)
 {
-    int sum = ZERO;
-    struct stack temp_sk;
+    stack temp_sk;
     InitializeStack(&temp_sk);
     CopyStack(sk, &temp_sk);
-    while (!IsEmptyStack(&temp_sk) && PopStack(&temp_sk) != item);
+    while (!IsEmptyStack(&temp_sk) && (PopStack(&temp_sk)).int_ != item.int_);
 
-    return (sum);
+    return (!IsEmptyStack(&temp_sk));
 }
 
-void UnionStack(struct stack * sk1, struct stack * sk2)
+void UnionStack(stack * sk1, stack * sk2)
 {
     CopyStack(sk1, sk2);
 }
