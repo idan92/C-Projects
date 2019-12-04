@@ -33,7 +33,6 @@ void PushStack(struct stack * sk , void * item)
 void * PopStack(struct stack * sk)
 {
     void * item = NULL;
-    
     if (!((*sk).items >= ONE))
     {
         item = *((*sk).values + (*sk).items - ONE);
