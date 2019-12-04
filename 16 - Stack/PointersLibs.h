@@ -35,7 +35,7 @@ typedef unsigned int dblword;
 
 struct stack
 {
-    void ** values;
+    void **values;
     unsigned int items;
 };
 

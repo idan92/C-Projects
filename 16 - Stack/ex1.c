@@ -33,7 +33,7 @@ void PushStack(struct stack * sk , void * item)
 void * PopStack(struct stack * sk)
 {
     void * item = NULL;
-    if (!((*sk).items >= ONE))
+    if ((*sk).items > ZERO)
     {
         item = *((*sk).values + (*sk).items - ONE);
         (*sk).values = realloc((*sk).values, ((--((*sk).items)) * sizeof(item)));
@@ -114,14 +114,48 @@ unsigned int ItemsStack(struct stack * sk)
     return (counter);
 }
 
+int SumStack(struct stack * sk)
+{
+    int sum = ZERO;
+    int * item;
+    struct stack temp_sk;
+    InitializeStack(&temp_sk);
+    CopyStack(sk, &temp_sk);
+    while (!IsEmptyStack(&temp_sk))
+    {
+        item = PopStack(&temp_sk);
+        sum += *item;
+    }
+
+    return (sum);
+}
+
+BOOLEAN FindInStack(struct stack * sk, void * item)
+{
+    int sum = ZERO;
+    struct stack temp_sk;
+    InitializeStack(&temp_sk);
+    CopyStack(sk, &temp_sk);
+    while (!IsEmptyStack(&temp_sk) && PopStack(&temp_sk) != item);
+
+    return (sum);
+}
+
+void UnionStack(struct stack * sk1, struct stack * sk2)
+{
+    CopyStack(sk1, sk2);
+}
+
 void main(void)
 {
     struct stack s;
     InitializeStack(&s);
-    PushStack(&s, 4);
-    PushStack(&s, 5);
-    PushStack(&s, 6);
-    printf("%hu\n", PopStack(&s));
+    int num1 = 4, num2 = 5, num3 = 6;
+    PushStack(&s, &num1);
+    PushStack(&s, &num2);
+    PushStack(&s, &num3);
+    printf("%hu\n", ItemsStack(&s));
+    printf("%p\n", PopStack(&s));
     printf("%hu\n", PopStack(&s));
     printf("%hu\n", PopStack(&s));
 }
