@@ -12,7 +12,6 @@ void InitializeStack(struct stack * sk)
     (*sk).items = ZERO;
 }
 
-
 BOOLEAN IsEmptyStack(struct stack * sk)
 {
     return (!(*sk).items);
@@ -34,17 +33,15 @@ void PushStack(struct stack * sk , void * item)
 void * PopStack(struct stack * sk)
 {
     void * item = NULL;
-    if (!IsEmptyStack(sk))
+    
+    if (!((*sk).items >= ONE))
     {
         item = *((*sk).values + (*sk).items - ONE);
-        if (!((*sk).items == ONE))
-        {
-            (*sk).values = realloc((*sk).values, ((--((*sk).items)) * sizeof(item)));
-        }
-        else
-        {
-            free((*sk).values);
-        }
+        (*sk).values = realloc((*sk).values, ((--((*sk).items)) * sizeof(item)));
+    }
+    else
+    {
+        free((*sk).values);
     }
 
     return (item);
