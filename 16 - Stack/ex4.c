@@ -1,5 +1,7 @@
 #include "Lib.h"
 
+#define MAX 21
+
 typedef struct
 {
     string name;
@@ -35,7 +37,7 @@ void AddBox(stack * sk, VegBox vb)
     }
     if (!StringCompare((*(VegBox *)(item.pointer)).name, vb.name))
     {
-        while ((*(VegBox *)(item.pointer)).amount++ < 21 && vb.amount-- > ZERO);
+        while ((*(VegBox *)(item.pointer)).amount++ < MAX && vb.amount-- > ZERO);
     }
     while (!IsEmptyStack(&temp_sk))
     {
