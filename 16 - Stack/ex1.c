@@ -1,5 +1,20 @@
 #include "Lib.h"
 
+//---------------------------------------------------------------------------------------
+//                                     Exc1a
+//                                     -----
+//
+// General         : The function checks when the order in the stack is turn over.
+//
+// Parameters     : s - A stack with numbers inside.(in) 
+//
+// Return Value : The value in the stack when the order is turned over.
+//
+//---------------------------------------------------------------------------------------
+// Programer    : Cohen Idan
+// Student No.  : 211675038
+// Date         : 05.12.2019
+//---------------------------------------------------------------------------------------
 int SectionOne(stack * sk)
 {
     stack temp_sk;
@@ -16,6 +31,21 @@ int SectionOne(stack * sk)
     return (this_number);
 }
 
+//---------------------------------------------------------------------------------------
+//                                     Exc1b
+//                                     -----
+//
+// General         : The function checks when the order in the stack is turn over.
+//
+// Parameters     : s - A stack with numbers inside.(in) 
+//
+// Return Value : The position in the stack when the order is turned over.
+//
+//---------------------------------------------------------------------------------------
+// Programer    : Cohen Idan
+// Student No.  : 211675038
+// Date         : 05.12.2019
+//---------------------------------------------------------------------------------------
 int SectionOne(stack * sk)
 {
     stack temp_sk;

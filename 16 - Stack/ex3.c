@@ -36,6 +36,21 @@ void DeleteDuplicates(stack * sk)
     }
 }
 
+//---------------------------------------------------------------------------------------
+//                                     Exc3
+//                                     ----
+//
+// General         : The function delete the duplicate numbers from the stack.
+//
+// Parameters     : s - A stack with numbers inside.(in) 
+//
+// Return Value : The stack without the duplicated numbers.
+//
+//---------------------------------------------------------------------------------------
+// Programer    : Cohen Idan
+// Student No.  : 211675038
+// Date         : 05.12.2019
+//---------------------------------------------------------------------------------------
 void main(void)
 {
     stack s;
